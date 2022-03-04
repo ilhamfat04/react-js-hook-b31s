@@ -1,11 +1,15 @@
 //import useState & useEffect here
-import { 
-    Container, 
-    Row, Col, Form, 
-    Button } from 'react-bootstrap'
+import { useEffect, useState } from 'react'
+import {
+    Container,
+    Row, Col, Form,
+    Button
+} from 'react-bootstrap'
 
 import Welcome from './Welcome'
 import GuestGreeting from './GuestGreeting'
+
+import ExampleComp from './ExampleComp'
 
 function App() {
 
@@ -18,8 +22,18 @@ function App() {
     })
 
     // Create DidMount with useEffect inside it can print "App Component Did Mount" & state value here
+    useEffect(() => {
+        console.log("App com did mount");
+        console.log(state);
+    })
 
     // Create DidUpdate with useEffect inside it can print "App Component Did Update" & state value here
+    useEffect(() => {
+        if (state.user.email) {
+            console.log("App comp did update");
+            console.log(state);
+        }
+    }, [state])
 
     const handleOnSubmit = (e) => {
         e.preventDefault()
@@ -27,7 +41,7 @@ function App() {
         const password = document.getElementById('password').value
         setState({
             isLogin: true,
-            user: { 
+            user: {
                 email,
                 password
             }
@@ -36,40 +50,41 @@ function App() {
 
     return (
         <>
-            {state.isLogin ? <Welcome /> : 
+            <ExampleComp user={state.user} />
+            {state.isLogin ? <Welcome /> :
                 (<>
                     <GuestGreeting />
                     <Container>
-                        <Row 
-                        className="d-flex justify-content-center mt-5">
+                        <Row
+                            className="d-flex justify-content-center mt-5">
                             <Col md="4">
-                            <Form onSubmit={handleOnSubmit}>
-                                <div className="text-center h5">Login</div>
+                                <Form onSubmit={handleOnSubmit}>
+                                    <div className="text-center h5">Login</div>
 
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control 
-                                    id="email"
-                                    name="email" size="sm" type="email" 
-                                    placeholder="Enter email" />
-                                </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                                        <Form.Label>Email address</Form.Label>
+                                        <Form.Control
+                                            id="email"
+                                            name="email" size="sm" type="email"
+                                            placeholder="Enter email" />
+                                    </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formBasicPassword">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control 
-                                    id="password"
-                                    name="password" size="sm" type="password" 
-                                    placeholder="Password" />
-                                </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                                        <Form.Label>Password</Form.Label>
+                                        <Form.Control
+                                            id="password"
+                                            name="password" size="sm" type="password"
+                                            placeholder="Password" />
+                                    </Form.Group>
 
-                                <Button variant="primary" type="submit" size="sm">
-                                    Submit
-                                </Button>
-                            </Form>
+                                    <Button variant="primary" type="submit" size="sm">
+                                        Submit
+                                    </Button>
+                                </Form>
                             </Col>
                         </Row>
                     </Container>
-                </>) }
+                </>)}
         </>
     )
 }
