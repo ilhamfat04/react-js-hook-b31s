@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { Container } from 'react-bootstrap'
 
-export default function ExampleComp(props) {
-    const { user } = props
+import { UserContext } from './context/userContext'
 
-    useEffect(() => {
-        console.log(user);
-    }, [props])
+export default function ExampleComp() {
 
-    return <Container>Email : {props.user.email}</Container>
+    const [state, dispatch] = useContext(UserContext)
+
+    return <Container>Email : {state?.user?.email}</Container>
 }
